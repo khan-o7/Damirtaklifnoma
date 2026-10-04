@@ -4,10 +4,8 @@
 // tezkor ishlashi uchun va tarmoq muammolarida ham ma'lumot yo'qolmasligi uchun 
 // vaqtincha mahalliy xotira (localStorage) imkoniyatiga ega.
 //
-// O'zingizning Google Apps Script deployment havolangizni olgach,
-// shu qatorga qo'shing:
-//   const SHEETS_API_URL = "https://script.google.com/macros/s/.../exec";
-const SHEETS_API_URL = "";
+// Google Apps Script deployment URL (public wishes backend)
+const SHEETS_API_URL = "https://script.google.com/macros/s/AKfycbyvszIkUCDx8Qm5MVn1tOz4r60uggpqsoveNl2t1J3AFqjigueoufX4IoHsU4LjlFv4/exec";
 
 const WEDDING_DATE = new Date("2026-11-07T18:00:00+05:00"); // O'zbekiston vaqti
 
