@@ -218,11 +218,13 @@ function renderWishes(wishes) {
       const date = new Date(w.vaqt);
       const timeStr = date.toLocaleString("uz-UZ", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
       return `
-        <div class="wish-card">
-          <span class="wish-time">${timeStr}</span>
-          <div class="wish-name">${escapeHtml(w.ism)}</div>
+        <article class="wish-card">
+          <div class="wish-header">
+            <div class="wish-name">${escapeHtml(w.ism)}</div>
+            <span class="wish-time">${timeStr}</span>
+          </div>
           <div class="wish-message">${escapeHtml(w.xabar)}</div>
-        </div>`;
+        </article>`;
     })
     .join("");
 }
