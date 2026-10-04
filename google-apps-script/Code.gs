@@ -16,12 +16,38 @@
  *
  * Wishes va RSVP uchun ikkita varaq (Wishes, RSVP) birinchi so'rov kelganda
  * avtomatik yaratiladi, ular haqida qayg'urish shart emas.
+ *
+ * MUHIM: Agar Apps Script "standalone" bo'lsa, quyidagi SHEET_ID ni
+ * o'zingizning Google Sheets ID bilan almashtiring. Shunda hamma uchun ko'rinadigan
+ * bitta jadvalga yoziladi, "active spreadsheet" dan bog'liq bo'lib qolmaydi.
  */
+
+var SHEET_ID = "1TfJ0QkTDX7yuFOH-1DmFG9fWzCd_xVjR1cBDTJOjYDs";
+
+function getSpreadsheet() {
+  if (SHEET_ID && SHEET_ID !== "PASTE_YOUR_SHEET_ID_HERE") {
+    try {
+      return SpreadsheetApp.openById(SHEET_ID);
+    } catch (err) {
+      // Agar sheet ID noto'g'ri bo'lsa, fallback bilan davom etamiz.
+    }
+  }
+
+  try {
+    return SpreadsheetApp.getActiveSpreadsheet();
+  } catch (err) {
+    return null;
+  }
+}
 
 function doGet(e) {
   e = e || { parameter: {} }; // muharrirdan "Run" bilan sinalganda ham xato bermasligi uchun
   var action = e.parameter.action;
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = getSpreadsheet();
+
+  if (!ss) {
+    return jsonResponse({ ok: false, error: "Spreadsheet topilmadi. SHEET_ID ni to'g'ri kiriting." });
+  }
 
   if (action === "wishes") {
     return jsonResponse(getWishes(ss));
@@ -36,7 +62,11 @@ function doGet(e) {
 }
 
 function doPost(e) {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = getSpreadsheet();
+  if (!ss) {
+    return jsonResponse({ ok: false, error: "Spreadsheet topilmadi. SHEET_ID ni to'g'ri kiriting." });
+  }
+
   var data;
   try {
     data = JSON.parse(e.postData.contents);
