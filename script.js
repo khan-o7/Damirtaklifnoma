@@ -4,8 +4,12 @@
 // tezkor ishlashi uchun va tarmoq muammolarida ham ma'lumot yo'qolmasligi uchun 
 // vaqtincha mahalliy xotira (localStorage) imkoniyatiga ega.
 //
-// Google Apps Script deployment URL (public wishes backend)
-const SHEETS_API_URL = "https://script.google.com/macros/s/AKfycbyvszIkUCDx8Qm5MVn1tOz4r60uggpqsoveNl2t1J3AFqjigueoufX4IoHsU4LjlFv4/exec";
+// Use a same-origin Vercel proxy in production to avoid browser CORS issues.
+// In local non-Vercel previews, fall back to the Apps Script URL directly.
+const SHEETS_API_URL =
+  typeof window !== "undefined" && window.location.hostname.endsWith("vercel.app")
+    ? "/api/wishes"
+    : "https://script.google.com/macros/s/AKfycbyvszIkUCDx8Qm5MVn1tOz4r60uggpqsoveNl2t1J3AFqjigueoufX4IoHsU4LjlFv4/exec";
 
 const WEDDING_DATE = new Date("2026-11-07T18:00:00+05:00"); // O'zbekiston vaqti
 
